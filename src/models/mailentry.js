@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'NotificationTicket',
+    modelName: 'mailEntry',
   });
-  return NotificationTicket;
+  return mailEntry;
 };
