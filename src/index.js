@@ -13,6 +13,12 @@ const cronJob = require('./utils/job');
 const ApiRoutes = require('./routes/index');
 app.use('/api', ApiRoutes);
 
+const rabbitmqConsumer = require('./rabbitMqConsumer');
+
+// Start consuming messages from RabbitMQ
+rabbitmqConsumer.consumeMessages();
+
+
 app.listen(PORT , () => {
     cronJob.setUpJobs();
     console.log(`server started at PORT ${PORT}`);
