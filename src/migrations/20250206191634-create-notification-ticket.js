@@ -2,34 +2,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('mailEntries', {
+    await queryInterface.createTable('notificationTickets', { // ✅ Table name fixed
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      subject: {
+      userEmail: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      content: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      recepientMail: {
-        type: Sequelize.STRING,
+      flightId: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM,
-        allowNull:false,
-        values: ["PENDING" , "SUCCESS" , "FAILED"],
-        defaultValue:"PENDING"
-      },
-      notificationTime: {
-        type: Sequelize.DATE,
-        allowNull: false
+        type: Sequelize.ENUM("PENDING", "SUCCESS"), // ✅ Added ENUM status column
+        allowNull: false,
+        defaultValue: "PENDING"
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('mailEntries');
+    await queryInterface.dropTable('notificationTickets');
   }
 };

@@ -1,25 +1,7 @@
-const sender = require('../config/emailConfig');
-const TicketRepository = require('../repository/emailRepository');
-const repo = new TicketRepository();
+const EmailRepository = require('../repository/emailRepository');
+const repo = new EmailRepository();
 
-const sendBasicEmail = async (mailFrom, mailTo, mailSubject, mailBody) => {
-    try {
-        const response = await sender.sendMail({
-            from: mailFrom,
-            to: mailTo,
-            subject: mailSubject,
-            text: mailBody
-        });
-        console.log(response);
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-//above was used to make mail using nodemailer which will be send using cron jobs.
-//below is used to insert email data into notificationticket table
-
-async function createNotification(data) {
+async function createEntry(data) {
     try {
         const ticket = await repo.createATicket(data);
         return ticket;
@@ -39,7 +21,7 @@ const fetchPendingEmails = async () => {
 }
 
 
-const updateTicket = async (ticketId, data) => {
+const updateEntry = async (ticketId, data) => {
     try {
         const response = await repo.update(ticketId, data);
         return response;
@@ -50,8 +32,7 @@ const updateTicket = async (ticketId, data) => {
 
 
 module.exports = {
-    sendBasicEmail,
-    createNotification,
+    createEntry,
     fetchPendingEmails,
-    updateTicket
+    updateEntry
 }

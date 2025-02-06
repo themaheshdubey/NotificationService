@@ -14,31 +14,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   NotificationTicket.init({
-    subject: {
+    userEmail: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    content: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    recepientMail: {
-      type: DataTypes.STRING,
+    flightId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM,
+      type: DataTypes.ENUM("PENDING", "SUCCESS"), //  Added ENUM status column
       allowNull: false,
-      values: ["PENDING" , "SUCCESS" , "FAILED"],
-      defaultValue:"PENDING"
-    },
-    notificationTime: {
-      type: DataTypes.DATE,
-      allowNull: false
+      defaultValue: "PENDING"
     }
   }, {
     sequelize,
-    modelName: 'mailEntry',
+    modelName: 'NotificationTicket',
   });
-  return mailEntry;
+  return NotificationTicket;
 };
